@@ -10,7 +10,7 @@ public class Node
     public Dictionary<string, int> state;
     public GAction action;
 
-    public Node (Node parent, float cost, Dictionary<string, int> allstates, GAction action)
+    public Node(Node parent, float cost, Dictionary<string, int> allstates, GAction action)
     {
         this.parent = parent;
         this.cost = cost;
@@ -19,14 +19,14 @@ public class Node
     }
 }
 
-public class GPlanner : MonoBehaviour
+public class GPlanner
 {
-   public Queue<GAction> plan(List<GAction> actions, Dictionary<string, int> goal, WorldStates states)
+    public Queue<GAction> plan(List<GAction> actions, Dictionary<string, int> goal, WorldStates states)
     {
         List<GAction> usableActions = new List<GAction>();
-        foreach(GAction a in actions)
+        foreach (GAction a in actions)
         {
-            if(a.IsAchievable())
+            if (a.IsAchievable())
                 usableActions.Add(a);
         }
 
@@ -35,14 +35,14 @@ public class GPlanner : MonoBehaviour
 
         bool success = BuildGraph(start, leaves, usableActions, goal);
 
-        if(!success)
+        if (!success)
         {
             Debug.Log("NO PLAN");
             return null;
         }
 
         Node cheapest = null;
-        foreach(Node leaf in leaves)
+        foreach (Node leaf in leaves)
         {
             if (cheapest == null)
                 cheapest = leaf;
@@ -55,8 +55,9 @@ public class GPlanner : MonoBehaviour
 
         List<GAction> result = new List<GAction>();
         Node n = cheapest;
-        while (n != null){
-            if(n.action != null)
+        while (n != null)
+        {
+            if (n.action != null)
             {
                 result.Insert(0, n.action);
             }
@@ -64,15 +65,15 @@ public class GPlanner : MonoBehaviour
         }
 
         Queue<GAction> queue = new Queue<GAction>();
-        foreach(GAction a in result)
+        foreach (GAction a in result)
         {
             queue.Enqueue(a);
         }
 
-        Debug.Log("The Plan is:");
+        Debug.Log("The Plan is: ");
         foreach (GAction a in queue)
         {
-            Debug.Log("Q:" + a.actionName);
+            Debug.Log("Q: " + a.actionName);
         }
 
         return queue;
@@ -81,42 +82,39 @@ public class GPlanner : MonoBehaviour
     private bool BuildGraph(Node parent, List<Node> leaves, List<GAction> usuableActions, Dictionary<string, int> goal)
     {
         bool foundPath = false;
-        foreach(GAction action in usuableActions)
+        foreach (GAction action in usuableActions)
         {
-            if(action.IsAchievableGiven(parent.state))
+            if (action.IsAchievableGiven(parent.state))
             {
-                Dictionary<string, int> curretnState = new Dictionary<string, int>(parent.state);
-                foreach(KeyValuePair<string, int> eff in action.effects)
+                Dictionary<string, int> currentState = new Dictionary<string, int>(parent.state);
+                foreach (KeyValuePair<string, int> eff in action.effects)
                 {
-                    if (!curretnState.ContainsKey(eff.Key))
-                        curretnState.Add(eff.Key, eff.Value);
+                    if (!currentState.ContainsKey(eff.Key))
+                        currentState.Add(eff.Key, eff.Value);
                 }
 
-                Node node = new Node(parent, parent.cost + action.cost, curretnState, action);
+                Node node = new Node(parent, parent.cost + action.cost, currentState, action);
 
-                if(GoalAchieved(goal, curretnState))
+                if (GoalAchieved(goal, currentState))
                 {
                     leaves.Add(node);
                     foundPath = true;
                 }
-
                 else
                 {
                     List<GAction> subset = ActionSubset(usuableActions, action);
                     bool found = BuildGraph(node, leaves, subset, goal);
-
                     if (found)
                         foundPath = true;
                 }
             }
         }
-
         return foundPath;
     }
 
-    private bool GoalAchieved (Dictionary<string, int> goal, Dictionary<string, int> state)
+    private bool GoalAchieved(Dictionary<string, int> goal, Dictionary<string, int> state)
     {
-        foreach(KeyValuePair<string,int> g in goal)
+        foreach (KeyValuePair<string, int> g in goal)
         {
             if (!state.ContainsKey(g.Key))
                 return false;
@@ -127,11 +125,12 @@ public class GPlanner : MonoBehaviour
     private List<GAction> ActionSubset(List<GAction> actions, GAction removeMe)
     {
         List<GAction> subset = new List<GAction>();
-        foreach(GAction a in actions)
+        foreach (GAction a in actions)
         {
             if (!a.Equals(removeMe))
                 subset.Add(a);
         }
         return subset;
     }
+
 }

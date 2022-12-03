@@ -20,6 +20,7 @@ public class GAgent : MonoBehaviour
 {
     public List<GAction> actions = new List<GAction>();
     public Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
+    public WorldStates beliefs = new WorldStates();
 
     GPlanner planner;
     Queue<GAction> actionQueue;
@@ -34,40 +35,40 @@ public class GAgent : MonoBehaviour
             actions.Add(a);
     }
 
-    bool Invoked = false;
+
+    bool invoked = false;
     void CompleteAction()
     {
         currentAction.running = false;
         currentAction.PostPerform();
-        Invoked = false;
+        invoked = false;
     }
 
     void LateUpdate()
     {
-        if(currentAction != null && currentAction.running)
+        if (currentAction != null && currentAction.running)
         {
-            if(currentAction.agent.hasPath && currentAction.agent.remainingDistance < 1f)
+            if (currentAction.agent.hasPath && currentAction.agent.remainingDistance < 1f)
             {
-                if(! Invoked)
+                if (!invoked)
                 {
                     Invoke("CompleteAction", currentAction.duration);
-                    Invoked = true;
+                    invoked = true;
                 }
             }
-
             return;
         }
 
-        if(planner == null || actionQueue == null)
+        if (planner == null || actionQueue == null)
         {
             planner = new GPlanner();
 
             var sortedGoals = from entry in goals orderby entry.Value descending select entry;
 
-            foreach(KeyValuePair<SubGoal, int> sg in sortedGoals)
+            foreach (KeyValuePair<SubGoal, int> sg in sortedGoals)
             {
                 actionQueue = planner.plan(actions, sg.Key.sgoals, null);
-                if(actionQueue != null)
+                if (actionQueue != null)
                 {
                     currentGoal = sg.Key;
                     break;
@@ -75,34 +76,35 @@ public class GAgent : MonoBehaviour
             }
         }
 
-        if(actionQueue != null && actionQueue.Count == 0)
+        if (actionQueue != null && actionQueue.Count == 0)
         {
-            if(currentGoal.remove)
+            if (currentGoal.remove)
             {
                 goals.Remove(currentGoal);
             }
-
             planner = null;
         }
 
-        if(actionQueue != null && actionQueue.Count > 0)
+        if (actionQueue != null && actionQueue.Count > 0)
         {
             currentAction = actionQueue.Dequeue();
-            if(currentAction.PrePerform())
+            if (currentAction.PrePerform())
             {
                 if (currentAction.target == null && currentAction.targetTag != "")
                     currentAction.target = GameObject.FindWithTag(currentAction.targetTag);
 
-                if(currentAction.target != null)
+                if (currentAction.target != null)
                 {
                     currentAction.running = true;
                     currentAction.agent.SetDestination(currentAction.target.transform.position);
                 }
-                else
-                {
-                    actionQueue = null;
-                }
             }
+            else
+            {
+                actionQueue = null;
+            }
+
         }
+
     }
 }

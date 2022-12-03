@@ -42,9 +42,10 @@ public abstract class GAction : MonoBehaviour
             {
                 effects.Add(w.key, w.value);
             }
+
     }
 
-     public bool IsAchievable()
+    public bool IsAchievable()
     {
         return true;
     }
@@ -56,7 +57,6 @@ public abstract class GAction : MonoBehaviour
             if (!conditions.ContainsKey(p.Key))
                 return false;
         }
-
         return true;
     }
 
