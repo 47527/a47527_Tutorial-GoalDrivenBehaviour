@@ -1604,6 +1604,7 @@ GameObject:
   - component: {fileID: 46613052}
   - component: {fileID: 46613053}
   - component: {fileID: 46613056}
+  - component: {fileID: 3735591636458585432}
   m_Layer: 0
   m_Name: Patient
   m_TagString: Untagged
@@ -1664,7 +1665,7 @@ MonoBehaviour:
   cost: 1
   target: {fileID: 0}
   targetTag: Door
-  duration: 2
+  duration: 0
   preConditions: []
   afterEffects:
   - key: hasArrived
@@ -1726,7 +1727,7 @@ MonoBehaviour:
   cost: 1
   target: {fileID: 0}
   targetTag: Reception
-  duration: 5
+  duration: 2
   preConditions:
   - key: hasArrived
     value: 0
@@ -1735,6 +1736,19 @@ MonoBehaviour:
     value: 0
   agent: {fileID: 0}
   running: 0
+--- !u!114 &3735591636458585432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2975963682894475912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f54a97af2ec24aa4982001d810ce5ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisAgent: {fileID: 46613052}
 --- !u!1 &3039438844609369891
 GameObject:
   m_ObjectHideFlags: 0
