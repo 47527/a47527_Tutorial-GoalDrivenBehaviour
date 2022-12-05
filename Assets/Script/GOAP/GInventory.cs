@@ -6,16 +6,16 @@ public class GInventory
 {
     public List<GameObject> items = new List<GameObject>();
 
-    public void AddItem (GameObject i)
+    public void AddItem(GameObject i)
     {
         items.Add(i);
     }
 
     public GameObject FindItemWithTag(string tag)
     {
-        foreach(GameObject i in items)
+        foreach (GameObject i in items)
         {
-            if( i.tag == tag)
+            if (i.tag == tag)
             {
                 return i;
             }
@@ -26,13 +26,18 @@ public class GInventory
     public void RemoveItem(GameObject i)
     {
         int indexToRemove = -1;
+
         foreach (GameObject g in items)
         {
             indexToRemove++;
             if (g == i)
+            {
                 break;
+            }
         }
-        if (indexToRemove >= -1)
+        if (indexToRemove >= 1)
+        {
             items.RemoveAt(indexToRemove);
+        }
     }
 }

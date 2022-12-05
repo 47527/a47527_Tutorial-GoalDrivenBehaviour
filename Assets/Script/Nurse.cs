@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Nurse : GAgent
 {
-    // Start is called before the first frame update
     new void Start()
     {
         base.Start();
@@ -14,12 +13,12 @@ public class Nurse : GAgent
         SubGoal s2 = new SubGoal("rested", 1, false);
         goals.Add(s2, 1);
 
-        Invoke("GetTired", Random.Range(10, 20));
+        Invoke("GetTired", Random.Range(10.0f, 20.0f));
     }
 
     void GetTired()
     {
         beliefs.ModifyState("exhausted", 0);
-        Invoke("GetTired", Random.Range(10, 20));
+        Invoke("GetTired", Random.Range(0.0f, 20.0f));
     }
 }

@@ -4,30 +4,22 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
-
     public GameObject patientPrefab;
-    public int numPatient;
+    public int numPatients;
 
-    // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < numPatient; i++)
-        {
-            Instantiate(patientPrefab, this.transform.position, Quaternion.identity);
-        }
-
-        Invoke("SpawnPatient", 5);
+        Invoke("SpawnPatient", 5.0f);
     }
 
     void SpawnPatient()
     {
         Instantiate(patientPrefab, this.transform.position, Quaternion.identity);
-        Invoke("SpawnPatient", Random.Range(2, 10));
+        Invoke("SpawnPatient", Random.Range(2.0f, 10.0f));
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Patient : GAgent
 {
-    // Start is called before the first frame update
     new void Start()
     {
         base.Start();
@@ -14,7 +13,7 @@ public class Patient : GAgent
         SubGoal s2 = new SubGoal("isTreated", 1, true);
         goals.Add(s2, 5);
 
-        SubGoal s3 = new SubGoal("goHome", 1, true);
+        SubGoal s3 = new SubGoal("isHome", 1, true);
         goals.Add(s3, 1);
     }
 }

@@ -7,7 +7,7 @@ public class GetTreated : GAction
     public override bool PrePerform()
     {
         target = inventory.FindItemWithTag("Cubicle");
-        if (target = null)
+        if (target == null)
             return false;
         return true;
     }
@@ -19,5 +19,4 @@ public class GetTreated : GAction
         inventory.RemoveItem(target);
         return true;
     }
-
 }

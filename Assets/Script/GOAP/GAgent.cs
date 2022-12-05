@@ -5,13 +5,13 @@ using System.Linq;
 
 public class SubGoal
 {
-    public Dictionary<string, int> sgoals;
+    public Dictionary<string, int> sGoals;
     public bool remove;
 
     public SubGoal(string s, int i, bool r)
     {
-        sgoals = new Dictionary<string, int>();
-        sgoals.Add(s, i);
+        sGoals = new Dictionary<string, int>();
+        sGoals.Add(s, i);
         remove = r;
     }
 }
@@ -20,26 +20,25 @@ public class GAgent : MonoBehaviour
 {
     public List<GAction> actions = new List<GAction>();
     public Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
-    public WorldStates beliefs = new WorldStates();
-
     public GInventory inventory = new GInventory();
+    public WorldStates beliefs = new WorldStates();
 
     GPlanner planner;
     Queue<GAction> actionQueue;
     public GAction currentAction;
     SubGoal currentGoal;
 
-    // Start is called before the first frame update
     public void Start()
     {
         GAction[] acts = this.GetComponents<GAction>();
         foreach (GAction a in acts)
+        {
             actions.Add(a);
+        }
     }
-
-
     bool invoked = false;
-    void CompleteAction()
+
+    public void CompleteAction()
     {
         currentAction.running = false;
         currentAction.PostPerform();
@@ -51,9 +50,8 @@ public class GAgent : MonoBehaviour
         if (currentAction != null && currentAction.running)
         {
             float distanceToTarget = Vector3.Distance(currentAction.target.transform.position, this.transform.position);
-            if (currentAction.agent.hasPath && distanceToTarget < 2f)
+            if (currentAction.agent.hasPath && distanceToTarget < 2.0f)
             {
-                Debug.Log("Distance to Goal: " + currentAction.agent.remainingDistance);
                 if (!invoked)
                 {
                     Invoke("CompleteAction", currentAction.duration);
@@ -71,7 +69,7 @@ public class GAgent : MonoBehaviour
 
             foreach (KeyValuePair<SubGoal, int> sg in sortedGoals)
             {
-                actionQueue = planner.plan(actions, sg.Key.sgoals, beliefs);
+                actionQueue = planner.plan(actions, sg.Key.sGoals, beliefs);
                 if (actionQueue != null)
                 {
                     currentGoal = sg.Key;
@@ -92,11 +90,13 @@ public class GAgent : MonoBehaviour
         if (actionQueue != null && actionQueue.Count > 0)
         {
             currentAction = actionQueue.Dequeue();
+
             if (currentAction.PrePerform())
             {
                 if (currentAction.target == null && currentAction.targetTag != "")
+                {
                     currentAction.target = GameObject.FindWithTag(currentAction.targetTag);
-
+                }
                 if (currentAction.target != null)
                 {
                     currentAction.running = true;
@@ -107,8 +107,6 @@ public class GAgent : MonoBehaviour
             {
                 actionQueue = null;
             }
-
         }
-
     }
 }

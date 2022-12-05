@@ -1159,11 +1159,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ffb6f40ec8aea44fa65c65c16a0f73e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionName: Action
+  actionName: Rest
   cost: 1
   target: {fileID: 0}
-  targetTag: 
-  duration: 0
+  targetTag: Lounge
+  duration: 5
   preConditions:
   - key: exhausted
     value: 0

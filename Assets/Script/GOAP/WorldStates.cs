@@ -24,40 +24,49 @@ public class WorldStates
         return states.ContainsKey(key);
     }
 
-    void AddState(string key, int value)
+    private void AddState(string key, int value)
     {
         states.Add(key, value);
     }
 
     public void ModifyState(string key, int value)
     {
-        if (states.ContainsKey(key))
+        if (HasState(key))
         {
             states[key] += value;
             if (states[key] <= 0)
+            {
                 RemoveState(key);
+            }
         }
         else
-            states.Add(key, value);
+        {
+            AddState(key, value);
+        }
     }
 
     public void RemoveState(string key)
     {
-        if (states.ContainsKey(key))
+        if (HasState(key))
+        {
             states.Remove(key);
+        }
     }
 
     public void SetState(string key, int value)
     {
-        if (states.ContainsKey(key))
+        if (HasState(key))
+        {
             states[key] = value;
+        }
         else
-            states.Add(key, value);
+        {
+            AddState(key, value);
+        }
     }
 
     public Dictionary<string, int> GetStates()
     {
         return states;
     }
-        
 }

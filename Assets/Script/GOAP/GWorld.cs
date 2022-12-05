@@ -14,19 +14,23 @@ public sealed class GWorld
         world = new WorldStates();
         patients = new Queue<GameObject>();
         cubicles = new Queue<GameObject>();
-
         GameObject[] cubes = GameObject.FindGameObjectsWithTag("Cubicle");
         foreach (GameObject c in cubes)
+        {
             cubicles.Enqueue(c);
+        }
 
         if (cubes.Length > 0)
+        {
             world.ModifyState("FreeCubicle", cubes.Length);
+        }
 
-        Time.timeScale = 5;
+        Time.timeScale = 5.0f;
     }
 
     private GWorld()
     {
+
     }
 
     public void AddPatient(GameObject p)

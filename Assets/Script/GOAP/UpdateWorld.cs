@@ -6,13 +6,11 @@ using UnityEngine.UI;
 public class UpdateWorld : MonoBehaviour
 {
     public Text states;
-
-    // Update is called once per frame
     void LateUpdate()
     {
-        Dictionary<string, int> worldstates = GWorld.Instance.GetWorld().GetStates();
+        Dictionary<string, int> worldStates = GWorld.Instance.GetWorld().GetStates();
         states.text = "";
-        foreach(KeyValuePair<string, int> s in worldstates)
+        foreach (KeyValuePair<string, int> s in worldStates)
         {
             states.text += s.Key + ", " + s.Value + "\n";
         }
