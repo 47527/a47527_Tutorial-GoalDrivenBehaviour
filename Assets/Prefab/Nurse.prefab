@@ -1022,7 +1022,8 @@ GameObject:
   - component: {fileID: 43304439}
   - component: {fileID: 43304438}
   - component: {fileID: 5809927709632712775}
-  - component: {fileID: 43304441}
+  - component: {fileID: 6149155815693572840}
+  - component: {fileID: 3513913608739635614}
   m_Layer: 0
   m_Name: Nurse
   m_TagString: Untagged
@@ -1133,7 +1134,7 @@ MonoBehaviour:
     value: 0
   agent: {fileID: 0}
   running: 0
---- !u!114 &43304441
+--- !u!114 &6149155815693572840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1142,10 +1143,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 2618188073631541129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f54a97af2ec24aa4982001d810ce5ebe, type: 3}
+  m_Script: {fileID: 11500000, guid: 87e8b840b70b8d2488b122a1a7b21596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thisAgent: {fileID: 43304439}
+--- !u!114 &3513913608739635614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618188073631541129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ffb6f40ec8aea44fa65c65c16a0f73e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Action
+  cost: 1
+  target: {fileID: 0}
+  targetTag: 
+  duration: 0
+  preConditions:
+  - key: exhausted
+    value: 0
+  afterEffects:
+  - key: rested
+    value: 0
+  agent: {fileID: 0}
+  running: 0
 --- !u!1 &2629889911763255196
 GameObject:
   m_ObjectHideFlags: 0
